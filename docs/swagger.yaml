@@ -1,0 +1,76 @@
+definitions:
+  delivery.BasicResponse:
+    properties:
+      code:
+        type: integer
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/ping:
+    get:
+      description: ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/delivery.BasicResponse'
+      summary: ping
+      tags:
+      - healthcheck
+  /v1/products:
+    get:
+      description: filter products
+      parameters:
+      - description: brand
+        in: query
+        name: brand
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: priceFrom
+        in: query
+        name: priceFrom
+        type: integer
+      - description: priceTo
+        in: query
+        name: priceTo
+        type: integer
+      - description: orderBy
+        enum:
+        - brand:asc
+        - brand:desc
+        - name:asc
+        - name:desc
+        - price:asc
+        - price:desc
+        in: query
+        name: orderBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/delivery.BasicResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/delivery.BasicResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/delivery.BasicResponse'
+      summary: filter products
+      tags:
+      - products
+swagger: "2.0"
